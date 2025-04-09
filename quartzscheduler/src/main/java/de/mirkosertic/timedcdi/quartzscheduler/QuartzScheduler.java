@@ -19,6 +19,10 @@ import de.mirkosertic.cdicron.api.JobScheduler;
 import jakarta.annotation.PreDestroy;
 import jakarta.enterprise.context.ApplicationScoped;
 
+/**
+ * An implementation of {@link JobScheduler} using Quartz
+ * 
+ */
 @ApplicationScoped
 public class QuartzScheduler implements JobScheduler {
 
@@ -55,6 +59,9 @@ public class QuartzScheduler implements JobScheduler {
         }
     }
 
+    /**
+     * Shutdown the scheduler when the application server stops
+     */
     @PreDestroy
     public void shutdown() {
         try {

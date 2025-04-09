@@ -12,5 +12,10 @@ import java.lang.annotation.*;
 @Target(ElementType.METHOD)
 public @interface Cron {
 
+	/**
+	 * The cronexpression to use (see: Quartz documentation )
+	 * s
+	 * @return
+	 */
     String cronExpression();
 }

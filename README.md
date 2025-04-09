@@ -12,7 +12,7 @@ Java Maven Dependency available from Central Repository:
 <dependency>
     <groupId>de.mirkosertic.cdicron</groupId>
     <artifactId>cdi-cron-quartz-scheduler</artifactId>
-    <version>1.1</version>
+    <version>2.0.0-SNAPSHOT</version>
 </dependency>
 ```
 
@@ -21,7 +21,7 @@ Example Java Code
 ```java
 import de.mirkosertic.cdicron.api.Cron;
 
-@Singleton
+@ApplicationScoped
 public class DummyJob {
 
     public static final AtomicLong COUNTER = new AtomicLong(0);

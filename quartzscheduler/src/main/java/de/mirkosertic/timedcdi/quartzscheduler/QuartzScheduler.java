@@ -1,18 +1,25 @@
 package de.mirkosertic.timedcdi.quartzscheduler;
 
-import de.mirkosertic.cdicron.api.JobScheduler;
+import static org.quartz.CronScheduleBuilder.cronSchedule;
+import static org.quartz.JobBuilder.newJob;
+import static org.quartz.TriggerBuilder.newTrigger;
 
-import org.quartz.*;
+import org.quartz.Job;
+import org.quartz.JobDataMap;
+import org.quartz.JobDetail;
+import org.quartz.JobExecutionContext;
+import org.quartz.JobExecutionException;
+import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
+import org.quartz.SchedulerFactory;
+import org.quartz.Trigger;
 import org.quartz.impl.StdSchedulerFactory;
 
-import javax.annotation.PreDestroy;
-import javax.inject.Singleton;
+import de.mirkosertic.cdicron.api.JobScheduler;
+import jakarta.annotation.PreDestroy;
+import jakarta.enterprise.context.ApplicationScoped;
 
-import static org.quartz.JobBuilder.*;
-import static org.quartz.TriggerBuilder.*;
-import static org.quartz.CronScheduleBuilder.*;
-
-@Singleton
+@ApplicationScoped
 public class QuartzScheduler implements JobScheduler {
 
     public static class RunnableWrapperJob implements Job {

@@ -1,12 +1,12 @@
 package de.mirkosertic.timedcdi.quartzscheduler;
 
 import de.mirkosertic.cdicron.api.Cron;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import java.util.concurrent.atomic.AtomicLong;
 
-@Singleton
+@ApplicationScoped
 public class DummyJob {
 
     public static final AtomicLong COUNTER = new AtomicLong(0);

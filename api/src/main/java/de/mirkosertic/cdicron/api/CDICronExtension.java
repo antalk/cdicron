@@ -17,14 +17,14 @@ public class CDICronExtension implements Extension {
 
 
     private final List<JobInfo> jobsToRegister;
-    private Bean jobScheduler;
+    private Bean<?> jobScheduler;
 
     public CDICronExtension() {
         jobsToRegister = new ArrayList<>();
     }
 
     public void onProcessBean(@Observes ProcessManagedBean aEvent, BeanManager aBeanManager) {
-        Class theBeanType = aEvent.getBean().getBeanClass();
+        final Class<?> theBeanType = aEvent.getBean().getBeanClass();
         if (JobScheduler.class.isAssignableFrom(theBeanType)) {
             jobScheduler = aEvent.getBean();
         }
@@ -41,11 +41,11 @@ public class CDICronExtension implements Extension {
         if (jobScheduler == null) {
             throw new IllegalStateException("No JobScheduler Implementation found in managed scope!");
         }
-        CreationalContext theContext = aBeanManager.createCreationalContext(jobScheduler);
+        final CreationalContext<?> theContext = aBeanManager.createCreationalContext(jobScheduler);
         try {
             JobScheduler theScheduler = (JobScheduler) aBeanManager.getReference(jobScheduler, jobScheduler.getBeanClass(), theContext);
             for (JobInfo t : jobsToRegister) {
-                theScheduler.schedule(t.getTimed().cronExpression(), t.getRunnable());
+                theScheduler.schedule(t.aTimed().cronExpression(), t.aRunnable());
             }
         } catch (Exception e) {
             throw new RuntimeException(e);

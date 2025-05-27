@@ -10,14 +10,15 @@ import jakarta.enterprise.inject.spi.Bean;
 import jakarta.enterprise.inject.spi.BeanManager;
 
 class BeanMethodInvocationRunnable implements Runnable {
-    final Bean bean;
+    
+	final Bean<?> bean;
     final BeanManager beanManager;
     final Method method;
 
     boolean firstInit;
     private Object instance;
 
-    public BeanMethodInvocationRunnable(Bean aBean, BeanManager aBeanManager, Method aMethod) {
+    public BeanMethodInvocationRunnable(Bean<?> aBean, BeanManager aBeanManager, Method aMethod) {
         bean = aBean;
         beanManager = aBeanManager;
         method = aMethod;
@@ -30,7 +31,7 @@ class BeanMethodInvocationRunnable implements Runnable {
             Context theContext = beanManager.getContext(bean.getScope());
             instance = theContext.get(bean);
             if (instance == null) {
-                CreationalContext theCreational = beanManager.createCreationalContext(bean);
+                final CreationalContext<?> theCreational = beanManager.createCreationalContext(bean);
                 instance = beanManager.getReference(bean, bean.getBeanClass(), theCreational);
             }
             firstInit = false;

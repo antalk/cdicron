@@ -26,9 +26,9 @@ import jakarta.enterprise.context.ApplicationScoped;
 @ApplicationScoped
 public class QuartzScheduler implements JobScheduler {
 
+	private static final String KEY = "runnable";
+	
     public static class RunnableWrapperJob implements Job {
-
-        public static final String KEY = "runnable";
 
         @Override
         public void execute(JobExecutionContext aContext) throws JobExecutionException {
@@ -49,7 +49,7 @@ public class QuartzScheduler implements JobScheduler {
     @Override
     public void schedule(String aCronExpression, Runnable aRunnable) {
         JobDataMap theJobDataMap = new JobDataMap();
-        theJobDataMap.put(RunnableWrapperJob.KEY, aRunnable);
+        theJobDataMap.put(QuartzScheduler.KEY, aRunnable);
         JobDetail theDetails = newJob(RunnableWrapperJob.class).setJobData(theJobDataMap).build();
         Trigger theTrigger = newTrigger().withSchedule(cronSchedule(aCronExpression)).build();
         try {

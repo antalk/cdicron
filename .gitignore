@@ -1,2 +1,6 @@
 .project
 /.settings
+/target/
+.classpath
+/api/.settings
+/quartzscheduler/.settings
